@@ -1,4 +1,4 @@
-window.onload = function() {
+    window.onload = function() {
     var containerConteudo = document.getElementById("container-conteudo");
     var containerCamera = document.getElementById("container-camera");
     var btnEnviar = document.getElementById("btn-enviar");
@@ -17,15 +17,27 @@ window.onload = function() {
     btnEnviar.style.display = "none";
 
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
+     
+        var constraints = { video: { facingMode: { exact: "environment" } } };
+        navigator.mediaDevices.getUserMedia(constraints)
             .then(function(stream) {
                 camera.srcObject = stream;
                 camera.play();
                 capturarBtn.style.display = "block";
                 loadingIndicator.style.display = "none";
             })
-            .catch(function(error) {
-                console.log("Erro ao acessar a câmera: " + error);
+            .catch(function() {
+               
+                navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
+                    .then(function(stream) {
+                        camera.srcObject = stream;
+                        camera.play();
+                        capturarBtn.style.display = "block";
+                        loadingIndicator.style.display = "none";
+                    })
+                    .catch(function(error) {
+                        console.log("Erro ao acessar a câmera: " + error);
+                    });
             });
     }
 
