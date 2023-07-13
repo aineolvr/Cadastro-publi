@@ -31,9 +31,15 @@ window.onload = function() {
 
         navigator.mediaDevices.getUserMedia(constraints)
             .then(function(stream) {
-                camera.srcObject = stream;
-                camera.play();
-                camera.controls = false;
+                if (isMobile) {
+                    // Remover elemento de vídeo no mobile
+                    camera.remove();
+                } else {
+                    camera.srcObject = stream;
+                    camera.play();
+                    camera.controls = false;
+                }
+
                 capturarBtn.style.display = "block";
                 loadingIndicator.style.display = "none";
             })
@@ -47,16 +53,24 @@ window.onload = function() {
         repetirBtn.style.display = "block";
         btnEnviar.style.display = "block";
 
-        camera.pause();
+        if (isMobile) {
+            // Capturar frame do canvas no mobile
+            var context = camera.getContext("2d");
+            context.drawImage(video, 0, 0, camera.width, camera.height);
+            fotoData = camera.toDataURL();
+        } else {
+            // Capturar frame do vídeo em outros dispositivos
+            camera.pause();
 
-        var canvas = document.createElement("canvas");
-        canvas.width = camera.videoWidth;
-        canvas.height = camera.videoHeight;
+            var canvas = document.createElement("canvas");
+            canvas.width = camera.videoWidth;
+            canvas.height = camera.videoHeight;
 
-        var context = canvas.getContext("2d");
-        context.drawImage(camera, 0, 0, canvas.width, canvas.height);
+            var context = canvas.getContext("2d");
+            context.drawImage(camera, 0, 0, canvas.width, canvas.height);
 
-        fotoData = canvas.toDataURL();
+            fotoData = canvas.toDataURL();
+        }
 
         fotoPreview.src = fotoData;
         fotoPreview.style.display = "block";
@@ -67,7 +81,13 @@ window.onload = function() {
         capturarBtn.style.display = "block";
         btnEnviar.style.display = "none";
 
-        camera.play();
+        if (isMobile) {
+            // Reiniciar câmera no mobile
+            camera.play();
+        } else {
+            // Reiniciar câmera em outros dispositivos
+            camera.play();
+        }
 
         fotoData = null;
         fotoPreview.style.display = "none";
