@@ -1,4 +1,7 @@
 window.onload = function() {
+    // Verificar se é um dispositivo móvel
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
     var containerConteudo = document.getElementById("container-conteudo");
     var containerCamera = document.getElementById("container-camera");
     var btnEnviar = document.getElementById("btn-enviar");
@@ -17,8 +20,15 @@ window.onload = function() {
     btnEnviar.style.display = "none";
 
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-     
-        var constraints = { video: { facingMode: { exact: "environment" } } };
+        var constraints = { video: true };
+
+        // Definir a restrição da câmera frontal em dispositivos móveis
+        if (isMobile) {
+            constraints.video = {
+                facingMode: { exact: "user" }
+            };
+        }
+
         navigator.mediaDevices.getUserMedia(constraints)
             .then(function(stream) {
                 camera.srcObject = stream;
@@ -27,19 +37,8 @@ window.onload = function() {
                 capturarBtn.style.display = "block";
                 loadingIndicator.style.display = "none";
             })
-            .catch(function() {
-               
-                navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
-                    .then(function(stream) {
-                        camera.srcObject = stream;
-                        camera.play();
-                        camera.controls = false;
-                        capturarBtn.style.display = "block";
-                        loadingIndicator.style.display = "none";
-                    })
-                    .catch(function(error) {
-                        console.log("Erro ao acessar a câmera: " + error);
-                    });
+            .catch(function(error) {
+                console.log("Erro ao acessar a câmera: " + error);
             });
     }
 
