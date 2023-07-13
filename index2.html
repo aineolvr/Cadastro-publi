@@ -30,10 +30,12 @@ body{
 }
 
 
+
 .mdc-card{
     flex-direction: column;
     display: flex;
-    width: 420px;
+    max-width: 420px;
+    width: 90%;
     max-height: 420px;
     align-items: center;
     padding: 10px 10px;
@@ -42,7 +44,6 @@ body{
     justify-content: center;
    
 }
-
 .container-filho{
     display: flex;
     flex-direction: column;
@@ -150,25 +151,22 @@ body{
     <div id="container-conteudo" class="container">
         <div class="mdc-card">
             <div id="loadingIndicator">Carregando...</div>
-           <h1>SPR - cadastrar foto</h1>
+            <h1>SPR - cadastrar foto</h1>
             <div class="container-filho">
-        
-                <div  class="container-camera">
-                    <video id="camera" autoplay></video>
-                    <img id="fotoPreview" alt="foto capturada"/>
+                <div id="container-camera">
+                    <video id="camera" autoplay playsinline></video>
+                    <img id="fotoPreview" alt="foto capturada">
                 </div>
-
                 <div class="btns">
-                <button class="mdc-button mdc-button--raised" id="capturarBtn" >Capturar Foto</button>
-                <button class="mdc-button mdc-button--raised" id="repetirBtn" >Repetir Foto</button>
-                <button id="btn-enviar" class="mdc-button mdc-button--raised">
-                 <span class="mdc-button__label">Salvar</span>
+                    <button class="mdc-button mdc-button--raised" id="capturarBtn">Capturar Foto</button>
+                    <button class="mdc-button mdc-button--raised" id="repetirBtn">Repetir Foto</button>
+                    <button id="btn-enviar" class="mdc-button mdc-button--raised">
+                        <span class="mdc-button__label">Salvar</span>
+                    </button>
                 </div><!--btns-->
-           </button>
-           </div><!--container-filho-->
-           </div><!--mdc-card-->
-        
-        </div><!--container-->
+            </div><!--container-filho-->
+        </div><!--mdc-card-->
+    </div><!--container-->
         <script src="script-foto.js"></script>
 </body>
 </html>
