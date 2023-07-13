@@ -3,113 +3,243 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <title>Cadastro</title>
-    <style>
-     @import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,400;1,300&display=swap');
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,400;1,300&display=swap');
 
-        *{
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-            font-family: 'Work Sans', sans-serif;
-        }  
-        
-        body{
-            background-color: #ccc;
-            
-        }
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Work Sans', sans-serif;
+}  
 
-        .container{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            
-        }
+body{
+    background-color: #ccc;
+}
 
-        .mdc-card{
-            width: 390px;
-            height: 390px;
-            align-items: center;
-            padding: 10px 10px;
-            background-color: white;
-            border-radius: 8px;
-            justify-content: center;
-           
-        }
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
 
-        .container-filho{
-            padding: 5px 10px 5px 55px;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 25px;
-        }
+.mdc-card{
+    flex-direction: column;
+    display: flex;
+    max-width: 420px;
+    width: 90%;
+    max-height: 420px;
+    align-items: center;
+    padding: 10px 10px;
+    background-color: white;
+    border-radius: 8px;
+    justify-content: center;
+}
 
-        .mdc-card h1{
-            margin-left: 5px;
-            font-size: 29px;
-            margin-bottom: 27px;
-            
-            color: rgb(51, 47, 47);
-            text-transform: uppercase;
-            
-           
+.container-filho{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+}
 
-        }
+.mdc-card h1{
+    margin-top: 10px;
+    margin-left: 5px;
+    font-size: 29px;
+    color: rgb(51, 47, 47);
+    text-transform: uppercase;
+}
 
-        .mdc-card  input[type=text]{
-            margin-top: 15px;
-            width:80%;
-            height: 40px;
-            border-radius: 8px;
-            font-size: 18px;
-            border: 1px solid #ccc;
-            border-bottom: 2px solid #2114a6;
-            background-color: #f1f0f0;
-            padding: 0 10px;
-            
-        }
-        .mdc-card button{
-            color: white;
-            margin-top: 30px;
-            width:80%;
-            height: 40px;
-           font-size: 19px;
-           border-radius: 8px;
-           background-color: #2114a6;
-        }
+.mdc-card button{ 
+    color: white;
+    margin-top: 20px;
+    width: 70%;
+    height: 37px;
+    font-size: 16px;
+    border-radius: 8px;
+    background-color: #2114a6;
+}
 
-        .mdc-card label {
-            margin-right: 35%;
-            font-size: 18px;
-            color: #2b2b2b;
-            text-transform: uppercase;
-            font-weight: bold;
-          
-           
-        }
-        
-    </style>
+#container-camera {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+#fotoPreview {
+    max-width: 100%;
+    max-height: 80vh;
+    display: none;
+    border-radius: 20px;
+    width: 100%;
+    height: auto;
+    z-index: 1;
+    margin-top: 20px;
+    padding: 0px 10px;
+    object-fit: contain;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.btns{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btns button{
+    display: inline-block;
+    margin: 0;
+}
+
+#loadingIndicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    font-size: 24px;
+}
+
+@media screen and (max-width: 480px) {
+    .mdc-card {
+        max-width: 300px;
+    }
+
+    #fotoPreview {
+        width: 100%;
+    }
+
+    .mdc-card h1 {
+        font-size: 24px;
+    }
+
+    .mdc-card button {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .mdc-card {
+        max-width: 250px;
+    }
+
+    .mdc-card h1 {
+        font-size: 20px;
+    }
+}
+</style>
+  
 </head>
 <body>
-    <div class="container">
-    <div class="mdc-card">
-       <h1>SPR - cadastrar foto</h1>
-        <div class="container-filho">
-        <label>CPF/PASSAPORTE</label>
-        <input id="inputcpf" value="" type="text" placeholder="781.805.692-48" readonly/>
-   
-       <button id="btn" class="mdc-button mdc-button--raised">
-       
-        <span class="mdc-button__label">Cadastrar</span>
-       </button>
-       </div><!--container-filho-->
-       </div><!--mdc-card-->
-    
+    <div id="container-conteudo" class="container">
+        <div class="mdc-card">
+            <div id="loadingIndicator">Carregando...</div>
+            <h1>SPR - cadastrar foto</h1>
+            <div class="container-filho">
+                <div id="container-camera">
+                    <video id="videoPreview" autoplay playsinline style="max-width: 100%; max-height: 80vh; border-radius: 20px;"></video>
+                    <img id="fotoPreview" alt="foto capturada" style="display: none;">
+                </div>
+                <div class="btns">
+                    <button class="mdc-button mdc-button--raised" id="abrirCameraBtn">Abrir Câmera</button>
+                    <button class="mdc-button mdc-button--raised" id="capturarBtn" style="display: none;">Capturar Foto</button>
+                    <button class="mdc-button mdc-button--raised" id="repetirBtn" style="display: none;">Repetir Foto</button>
+                    <button id="btn-enviar" class="mdc-button mdc-button--raised" style="display: none;">
+                        <span class="mdc-button__label">Salvar</span>
+                    </button>
+                </div><!--btns-->
+            </div><!--container-filho-->
+        </div><!--mdc-card-->
     </div><!--container-->
-    <script src="./script.js"></script>
+    <script src="script-foto.js"></script>
+    <script>
+        window.onload = function() {
+            var containerConteudo = document.getElementById("container-conteudo");
+            var containerCamera = document.getElementById("container-camera");
+            var abrirCameraBtn = document.getElementById("abrirCameraBtn");
+            var capturarBtn = document.getElementById("capturarBtn");
+            var repetirBtn = document.getElementById("repetirBtn");
+            var btnEnviar = document.getElementById("btn-enviar");
+            var videoPreview = document.getElementById("videoPreview");
+            var fotoPreview = document.getElementById("fotoPreview");
+            var fotoData = null;
+        
+            var loadingIndicator = document.getElementById("loadingIndicator");
+            loadingIndicator.style.display = "none";
+        
+            abrirCameraBtn.addEventListener("click", function() {
+                abrirCameraBtn.style.display = "none";
+                btnEnviar.style.display = "none";
+                fotoPreview.style.display = "none";
+        
+                var constraints = { video: { facingMode: { exact: "environment" } } };
+                navigator.mediaDevices.getUserMedia(constraints)
+                    .then(function(stream) {
+                        containerCamera.style.display = "block";
+                        videoPreview.srcObject = stream;
+                        capturarBtn.style.display = "block";
+                    })
+                    .catch(function() {
+                        navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
+                            .then(function(stream) {
+                                containerCamera.style.display = "block";
+                                videoPreview.srcObject = stream;
+                                capturarBtn.style.display = "block";
+                            })
+                            .catch(function(error) {
+                                console.log("Erro ao acessar a câmera: " + error);
+                            });
+                    });
+            });
+        
+            capturarBtn.addEventListener("click", function() {
+                capturarBtn.style.display = "none";
+                repetirBtn.style.display = "block";
+                fotoPreview.style.display = "block";
+                btnEnviar.style.display = "block";
+        
+                var canvas = document.createElement("canvas");
+                canvas.width = videoPreview.videoWidth;
+                canvas.height = videoPreview.videoHeight;
+        
+                var context = canvas.getContext("2d");
+                context.drawImage(videoPreview, 0, 0, canvas.width, canvas.height);
+        
+                fotoData = canvas.toDataURL();
+        
+                fotoPreview.src = fotoData;
+            });
+        
+            repetirBtn.addEventListener("click", function() {
+                repetirBtn.style.display = "none";
+                capturarBtn.style.display = "block";
+                fotoPreview.style.display = "none";
+                btnEnviar.style.display = "none";
+        
+                videoPreview.play();
+        
+                fotoData = null;
+                fotoPreview.src = "";
+            });
+        };
+    </script>
 </body>
 </html>
