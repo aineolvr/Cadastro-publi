@@ -26,10 +26,7 @@ body{
     justify-content: center;
     align-items: center;
     height: 100vh;
-    
 }
-
-
 
 .mdc-card{
     flex-direction: column;
@@ -42,135 +39,112 @@ body{
     background-color: white;
     border-radius: 8px;
     justify-content: center;
-   
 }
+
 .container-filho{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-bottom: 25px;
-   
 }
 
 .mdc-card h1{
-  
     margin-top: 10px;
     margin-left: 5px;
     font-size: 29px;
     color: rgb(51, 47, 47);
     text-transform: uppercase;
-
 }
-   .mdc-card button{ 
-     color: white;
-     margin-top: 20px;
-     width:70%;
-    
-    
-     height: 37px;
-     font-size: 16px;
-     border-radius: 8px;
-     background-color: #2114a6;
-     
-    }
 
-    #container-camera {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        margin-bottom: 20px;
-    }
-    #camera {
-     max-width: 100%;
-      max-height: 80vh;
-      transform: scaleX(-1);
-      margin-left: 35px;
-      width: 80%;
-      height: auto;
-      margin-top: 20px;
-      border-radius: 20px;
-      padding: 0px 10px;
-    }
-    #capturarBtn, #repetirBtn {
-      display: none;
-    }
+.mdc-card button{ 
+    color: white;
+    margin-top: 20px;
+    width: 70%;
+    height: 37px;
+    font-size: 16px;
+    border-radius: 8px;
+    background-color: #2114a6;
+}
 
-    #fotoPreview {
-     max-width: 100%;
-      max-height: 80vh;
-      display: none;
-      border-radius: 20px;
-      width: 80%;
-      height: auto;
-      z-index: -1;
-      margin-top: 20px;
-      padding: 0px 10px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      object-fit: cover;
-    }
+#container-camera {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-bottom: 20px;
+}
 
-    .btns{
-        margin-top: 10px;
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-    }
+#fotoPreview {
+    max-width: 100%;
+    max-height: 80vh;
+    display: none;
+    border-radius: 20px;
+    width: 100%;
+    height: auto;
+    z-index: 1;
+    margin-top: 20px;
+    padding: 0px 10px;
+    object-fit: contain;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 
-    .btns button{
-        display: inline-block;
-        margin: 0;
-    }
-    
-    #loadingIndicator {
+.btns{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btns button{
+    display: inline-block;
+    margin: 0;
+}
+
+#loadingIndicator {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-     background-color: #ccc;
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     color: black;
-     font-size: 24px;
+    background-color: #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    font-size: 24px;
 }
 
 @media screen and (max-width: 480px) {
-            .mdc-card {
-                max-width: 300px;
-            }
+    .mdc-card {
+        max-width: 300px;
+    }
 
-            #camera,
-            #fotoPreview {
-                width: 100%;
-            }
+    #fotoPreview {
+        width: 100%;
+    }
 
-            .mdc-card h1 {
-                font-size: 24px;
-            }
+    .mdc-card h1 {
+        font-size: 24px;
+    }
 
-            .mdc-card button {
-                width: 100%;
-            }
-        }
+    .mdc-card button {
+        width: 100%;
+    }
+}
 
-        @media screen and (max-width: 320px) {
-            .mdc-card {
-                max-width: 250px;
-            }
+@media screen and (max-width: 320px) {
+    .mdc-card {
+        max-width: 250px;
+    }
 
-            .mdc-card h1 {
-                font-size: 20px;
-            }
-        }
-    
-    
-
+    .mdc-card h1 {
+        font-size: 20px;
+    }
+}
 </style>
   
 </head>
@@ -181,19 +155,91 @@ body{
             <h1>SPR - cadastrar foto</h1>
             <div class="container-filho">
                 <div id="container-camera">
-                    <video id="camera" playsinline></video>
-                    <img id="fotoPreview" alt="foto capturada">
+                    <video id="videoPreview" autoplay playsinline style="max-width: 100%; max-height: 80vh; border-radius: 20px;"></video>
+                    <img id="fotoPreview" alt="foto capturada" style="display: none;">
                 </div>
                 <div class="btns">
-                    <button class="mdc-button mdc-button--raised" id="capturarBtn">Capturar Foto</button>
-                    <button class="mdc-button mdc-button--raised" id="repetirBtn">Repetir Foto</button>
-                    <button id="btn-enviar" class="mdc-button mdc-button--raised">
+                    <button class="mdc-button mdc-button--raised" id="abrirCameraBtn">Abrir Câmera</button>
+                    <button class="mdc-button mdc-button--raised" id="capturarBtn" style="display: none;">Capturar Foto</button>
+                    <button class="mdc-button mdc-button--raised" id="repetirBtn" style="display: none;">Repetir Foto</button>
+                    <button id="btn-enviar" class="mdc-button mdc-button--raised" style="display: none;">
                         <span class="mdc-button__label">Salvar</span>
                     </button>
                 </div><!--btns-->
             </div><!--container-filho-->
         </div><!--mdc-card-->
     </div><!--container-->
-        <script src="script-foto.js"></script>
+    <script src="script-foto.js"></script>
+    <script>
+        window.onload = function() {
+            var containerConteudo = document.getElementById("container-conteudo");
+            var containerCamera = document.getElementById("container-camera");
+            var abrirCameraBtn = document.getElementById("abrirCameraBtn");
+            var capturarBtn = document.getElementById("capturarBtn");
+            var repetirBtn = document.getElementById("repetirBtn");
+            var btnEnviar = document.getElementById("btn-enviar");
+            var videoPreview = document.getElementById("videoPreview");
+            var fotoPreview = document.getElementById("fotoPreview");
+            var fotoData = null;
+        
+            var loadingIndicator = document.getElementById("loadingIndicator");
+            loadingIndicator.style.display = "none";
+        
+            abrirCameraBtn.addEventListener("click", function() {
+                abrirCameraBtn.style.display = "none";
+                btnEnviar.style.display = "none";
+                fotoPreview.style.display = "none";
+        
+                var constraints = { video: { facingMode: { exact: "environment" } } };
+                navigator.mediaDevices.getUserMedia(constraints)
+                    .then(function(stream) {
+                        containerCamera.style.display = "block";
+                        videoPreview.srcObject = stream;
+                        capturarBtn.style.display = "block";
+                    })
+                    .catch(function() {
+                        navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
+                            .then(function(stream) {
+                                containerCamera.style.display = "block";
+                                videoPreview.srcObject = stream;
+                                capturarBtn.style.display = "block";
+                            })
+                            .catch(function(error) {
+                                console.log("Erro ao acessar a câmera: " + error);
+                            });
+                    });
+            });
+        
+            capturarBtn.addEventListener("click", function() {
+                capturarBtn.style.display = "none";
+                repetirBtn.style.display = "block";
+                fotoPreview.style.display = "block";
+                btnEnviar.style.display = "block";
+        
+                var canvas = document.createElement("canvas");
+                canvas.width = videoPreview.videoWidth;
+                canvas.height = videoPreview.videoHeight;
+        
+                var context = canvas.getContext("2d");
+                context.drawImage(videoPreview, 0, 0, canvas.width, canvas.height);
+        
+                fotoData = canvas.toDataURL();
+        
+                fotoPreview.src = fotoData;
+            });
+        
+            repetirBtn.addEventListener("click", function() {
+                repetirBtn.style.display = "none";
+                capturarBtn.style.display = "block";
+                fotoPreview.style.display = "none";
+                btnEnviar.style.display = "none";
+        
+                videoPreview.play();
+        
+                fotoData = null;
+                fotoPreview.src = "";
+            });
+        };
+    </script>
 </body>
 </html>
