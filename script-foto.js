@@ -1,4 +1,4 @@
-    window.onload = function() {
+window.onload = function() {
     var containerConteudo = document.getElementById("container-conteudo");
     var containerCamera = document.getElementById("container-camera");
     var btnEnviar = document.getElementById("btn-enviar");
@@ -23,6 +23,7 @@
             .then(function(stream) {
                 camera.srcObject = stream;
                 camera.play();
+                camera.controls = false;
                 capturarBtn.style.display = "block";
                 loadingIndicator.style.display = "none";
             })
@@ -32,6 +33,7 @@
                     .then(function(stream) {
                         camera.srcObject = stream;
                         camera.play();
+                        camera.controls = false;
                         capturarBtn.style.display = "block";
                         loadingIndicator.style.display = "none";
                     })
