@@ -5,7 +5,7 @@ window.onload = function() {
     var containerConteudo = document.getElementById("container-conteudo");
     var containerCamera = document.getElementById("container-camera");
     var btnEnviar = document.getElementById("btn-enviar");
-    var camera = document.getElementById("camera");
+    var camera = document.createElement("video");
     var capturarBtn = document.getElementById("capturarBtn");
     var repetirBtn = document.getElementById("repetirBtn");
     var fotoPreview = document.getElementById("fotoPreview");
@@ -31,14 +31,20 @@ window.onload = function() {
 
         navigator.mediaDevices.getUserMedia(constraints)
             .then(function(stream) {
+                camera.srcObject = stream;
+                camera.play();
+                camera.controls = false;
+                camera.setAttribute("playsinline", true); // Adicionar atributo playsinline para reprodução em tela cheia no iOS
+                camera.style.transform = "scaleX(-1)"; // Inverter o vídeo horizontalmente para corrigir espelhamento
+                camera.style.width = "100%";
+                camera.style.height = "auto";
+
                 if (isMobile) {
-                    // Remover elemento de vídeo no mobile
-                    camera.remove();
-                } else {
-                    camera.srcObject = stream;
-                    camera.play();
-                    camera.controls = false;
+                    // Remover controles de vídeo no mobile
+                    camera.setAttribute("controls", false);
                 }
+
+                containerCamera.appendChild(camera);
 
                 capturarBtn.style.display = "block";
                 loadingIndicator.style.display = "none";
@@ -53,24 +59,16 @@ window.onload = function() {
         repetirBtn.style.display = "block";
         btnEnviar.style.display = "block";
 
-        if (isMobile) {
-            // Capturar frame do canvas no mobile
-            var context = camera.getContext("2d");
-            context.drawImage(video, 0, 0, camera.width, camera.height);
-            fotoData = camera.toDataURL();
-        } else {
-            // Capturar frame do vídeo em outros dispositivos
-            camera.pause();
+        camera.pause();
 
-            var canvas = document.createElement("canvas");
-            canvas.width = camera.videoWidth;
-            canvas.height = camera.videoHeight;
+        var canvas = document.createElement("canvas");
+        canvas.width = camera.videoWidth;
+        canvas.height = camera.videoHeight;
 
-            var context = canvas.getContext("2d");
-            context.drawImage(camera, 0, 0, canvas.width, canvas.height);
+        var context = canvas.getContext("2d");
+        context.drawImage(camera, 0, 0, canvas.width, canvas.height);
 
-            fotoData = canvas.toDataURL();
-        }
+        fotoData = canvas.toDataURL();
 
         fotoPreview.src = fotoData;
         fotoPreview.style.display = "block";
@@ -81,13 +79,7 @@ window.onload = function() {
         capturarBtn.style.display = "block";
         btnEnviar.style.display = "none";
 
-        if (isMobile) {
-            // Reiniciar câmera no mobile
-            camera.play();
-        } else {
-            // Reiniciar câmera em outros dispositivos
-            camera.play();
-        }
+        camera.play();
 
         fotoData = null;
         fotoPreview.style.display = "none";
