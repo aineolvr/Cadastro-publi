@@ -21,6 +21,7 @@ body{
     background-color: #ccc;
 }
 
+
 .container{
     display: flex;
     justify-content: center;
@@ -78,35 +79,32 @@ body{
 }
 
 #camera {
-     max-width: 100%;
-      max-height: 80vh;
-      transform: scaleX(-1);
-      margin-left: 10px;
-      width: 80%;
-      height: auto;
-      margin-top: 20px;
-      border-radius: 20px;
-      padding: 0px 10px;
-    }
-    #capturarBtn, #repetirBtn {
-      display: none;
-    }
+    position: relative;
+    max-width: 100%;
+    max-height: 80vh;
+    transform: scaleX(-1);
+    margin-left: 10px;
+    width: 80%;
+    height: auto;
+    margin-top: 20px;
+    border-radius: 20px;
+    padding: 0px 10px;
+}
 
+#capturarBtn, #repetirBtn {
+    display: none;
+}
 
 #fotoPreview {
-     max-width: 100%;
-      max-height: 80vh;
-      display: none;
-      border-radius: 20px;
-      width: 80%;
-      height: auto;
-      z-index: -1;
-      margin-top: 20px;
-      padding: 0px 10px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      object-fit: cover;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 100%;
+    max-height: 100%;
+    display: none;
+    border-radius: 20px;
+    object-fit: contain;
 }
 
 .btns{
@@ -142,12 +140,11 @@ body{
 
     #fotoPreview {
         width: 100%;
-      
+        height: auto;
     }
 
     .mdc-card h1 {
         font-size: 24px;
-       
     }
 
     .mdc-card button {
@@ -190,76 +187,3 @@ body{
         </div><!--mdc-card-->
     </div><!--container-->
     <script src="script-foto.js"></script>
-    <script>
-        window.onload = function() {
-            var containerConteudo = document.getElementById("container-conteudo");
-            var containerCamera = document.getElementById("container-camera");
-            var abrirCameraBtn = document.getElementById("abrirCameraBtn");
-            var capturarBtn = document.getElementById("capturarBtn");
-            var repetirBtn = document.getElementById("repetirBtn");
-            var btnEnviar = document.getElementById("btn-enviar");
-            var videoPreview = document.getElementById("videoPreview");
-            var fotoPreview = document.getElementById("fotoPreview");
-            var fotoData = null;
-        
-            var loadingIndicator = document.getElementById("loadingIndicator");
-            loadingIndicator.style.display = "none";
-        
-            abrirCameraBtn.addEventListener("click", function() {
-                abrirCameraBtn.style.display = "none";
-                btnEnviar.style.display = "none";
-                fotoPreview.style.display = "none";
-        
-                var constraints = { video: { facingMode: { exact: "user" } } };
-                navigator.mediaDevices.getUserMedia(constraints)
-                    .then(function(stream) {
-                        containerCamera.style.display = "block";
-                        videoPreview.srcObject = stream;
-                        capturarBtn.style.display = "block";
-                    })
-                    .catch(function() {
-                        navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
-                            .then(function(stream) {
-                                containerCamera.style.display = "block";
-                                videoPreview.srcObject = stream;
-                                capturarBtn.style.display = "block";
-                            })
-                            .catch(function(error) {
-                                console.log("Erro ao acessar a câmera: " + error);
-                            });
-                    });
-            });
-        
-            capturarBtn.addEventListener("click", function() {
-                capturarBtn.style.display = "none";
-                repetirBtn.style.display = "block";
-                fotoPreview.style.display = "block";
-                btnEnviar.style.display = "block";
-        
-                var canvas = document.createElement("canvas");
-                canvas.width = videoPreview.videoWidth;
-                canvas.height = videoPreview.videoHeight;
-        
-                var context = canvas.getContext("2d");
-                context.drawImage(videoPreview, 0, 0, canvas.width, canvas.height);
-        
-                fotoData = canvas.toDataURL();
-        
-                fotoPreview.src = fotoData;
-            });
-        
-            repetirBtn.addEventListener("click", function() {
-                repetirBtn.style.display = "none";
-                capturarBtn.style.display = "block";
-                fotoPreview.style.display = "none";
-                btnEnviar.style.display = "none";
-        
-                videoPreview.play();
-        
-                fotoData = null;
-                fotoPreview.src = "";
-            });
-        };
-    </script>
-</body>
-</html>
