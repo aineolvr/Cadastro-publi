@@ -190,7 +190,7 @@ body{
                 btnEnviar.style.display = "none";
                 fotoPreview.style.display = "none";
         
-                var constraints = { video: { facingMode: { exact: "environment" } } };
+                var constraints = { video: { facingMode: { exact: "user" } } };
                 navigator.mediaDevices.getUserMedia(constraints)
                     .then(function(stream) {
                         containerCamera.style.display = "block";
